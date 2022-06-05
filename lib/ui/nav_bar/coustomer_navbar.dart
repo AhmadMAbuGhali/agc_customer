@@ -71,6 +71,7 @@ class _HomeScreenState extends State<CustomerNavBar> {
                 return MaterialPageRoute(
                   builder: (_) => ppage(index),
                   settings: settings,
+                  // Hello
                 );
               },
             ),
