@@ -1,5 +1,6 @@
 
 
+import 'package:agc_customer/ui/nav_bar/main_navbar.dart';
 import 'package:agc_customer/ui/registration/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -123,7 +124,7 @@ class Login extends StatelessWidget {
               child: SizedBox(
                 width: 253.w,
                 height: 50.h,
-                child: ElevatedButton(onPressed:()=> Get.to(CustomerNavBar()),
+                child: ElevatedButton(onPressed:()=> Get.to(MainNavBar()),
 
                   child:const Text('تسجيل الدخول'),),
               )

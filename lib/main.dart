@@ -1,4 +1,6 @@
 import 'package:agc_customer/resources/theme_manager.dart';
+import 'package:agc_customer/ui/order/new_order_product_details.dart';
+import 'package:agc_customer/ui/registration/login.dart';
 import 'package:agc_customer/ui/registration/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';

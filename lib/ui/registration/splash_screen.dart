@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body:  SplashScreenView(
-        navigateRoute: SingUP(),
+        navigateRoute: Login(),
         duration: 4000,
         imageSize: 233,
         imageSrc: 'assets/images/splahlogo.png',
