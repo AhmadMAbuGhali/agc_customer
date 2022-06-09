@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import '../model/customer_model.dart';
 
-   const int splashDelay = 2;
-
-  final Future<FirebaseApp> firebaseInitialization = Firebase.initializeApp();
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+class AppConstants {
+  static const int splashDelay = 2;
+  static CustomerModel? loggedCustomer;
+}
 

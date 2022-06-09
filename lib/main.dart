@@ -1,4 +1,5 @@
 import 'package:agc_customer/resources/theme_manager.dart';
+import 'package:agc_customer/servisers/auth_provider.dart';
 import 'package:agc_customer/ui/order/new_order_product_details.dart';
 import 'package:agc_customer/ui/registration/login.dart';
 import 'package:agc_customer/ui/registration/splash_screen.dart';
@@ -8,15 +9,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
-void main() async {
+import 'servisers/firebase_provider.dart';
+Future <void> main() async {
   await ScreenUtil.ensureScreenSize();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp( MyApp());
+
+  await Firebase.initializeApp();
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+    ChangeNotifierProvider<FireBaseProvider>(create: (_) => FireBaseProvider()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -38,7 +43,7 @@ class _MyAppState extends State<MyApp> {
           useInheritedMediaQuery: true,
           // locale: DevicePreview.locale(context),
           builder: DevicePreview.appBuilder,
-          theme: getApplicationTheme(),
+          theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
 
           localizationsDelegates: const [
@@ -58,7 +63,7 @@ class _MyAppState extends State<MyApp> {
         );
 
       },
-      child:  SplashScreen(),
+      child:  Login(),
 
     );
 

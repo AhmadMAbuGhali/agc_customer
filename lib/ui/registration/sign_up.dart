@@ -138,7 +138,9 @@ class SingUP extends StatelessWidget {
                 child: SizedBox(
                   width: 250.w,
                   height: 45.h,
-                  child: ElevatedButton(onPressed:()=> Get.to(CountSingUP()),
+                  child: ElevatedButton(onPressed:()=> Get.to(() => CountSingUP(), arguments: [
+                   nameController.text.trim(),emailController.text.trim(),passController.text.trim()
+                  ]),
                     child:Text('التالي '),),
                 )
             ),
