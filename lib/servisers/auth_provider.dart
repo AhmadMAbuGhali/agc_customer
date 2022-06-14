@@ -12,84 +12,88 @@ import 'fierbase/auth_helper.dart';
 import 'fierbase/firestore_helper.dart';
 
 class AuthProvider extends ChangeNotifier {
-AuthProvider() ;
+  AuthProvider();
 
-SnackBar snackBar = const SnackBar(
-  content: Text('Enter All Field!'),
-  backgroundColor: Colors.red,
-  duration: Duration(milliseconds: 2000),
-);
+  SnackBar snackBar = const SnackBar(
+    content: Text('Enter All Field!'),
+    backgroundColor: Colors.red,
+    duration: Duration(milliseconds: 2000),
+  );
 
-register(BuildContext context,String name,String email,String password,String bakeryName,String phoneNumber,String address) async {
-  log('start register');
-  CustomerModel customerModel = CustomerModel(name: name, email: email, phoneNumber: phoneNumber, password: password, address: address, bakeryName: bakeryName) ;
-  try {
-    UserCredential? x = await AuthHelper.authHelper
-        .createNewAccount(customerModel.email.trim(), customerModel.password.trim());
-    customerModel.id = x!.user!.uid;
-    await FirestoreHelper.firestoreHelper.waitingCustomer(customerModel);
-    AppConstants.loggedCustomer = customerModel;
-    log('تم التسجيل بنجاح ');
-  } on Exception catch (e) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(e.toString().split(']').last),
-      backgroundColor: Colors.red,
-    ));
+  register(BuildContext context, String name, String email, String password,
+      String bakeryName, String phoneNumber, String address) async {
+    log('start register');
+    CustomerModel customerModel = CustomerModel(
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+        address: address,
+        bakeryName: bakeryName);
+    try {
+      UserCredential? x = await AuthHelper.authHelper.createNewAccount(
+          customerModel.email.trim(), customerModel.password.trim());
+      customerModel.id = x!.user!.uid;
+      await FirestoreHelper.firestoreHelper.waitingCustomer(customerModel);
+      AppConstants.loggedCustomer = customerModel;
+      log('تم التسجيل بنجاح ');
+    } on Exception catch (e) {
+      return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString().split(']').last),
+        backgroundColor: Colors.red,
+      ));
+    }
   }
-}
 
-login(BuildContext context,String email,String password) async {
-  try {
-    UserCredential? userCredential=  await AuthHelper.authHelper.signIn(email,password);
-    if (AuthHelper.authHelper.success) {
-      String? email =await FirebaseAuth.instance.currentUser!.email;
-
+  login(BuildContext context, String email, String password) async {
+    try {
+      UserCredential? userCredential =
+          await AuthHelper.authHelper.signIn(email, password);
+      if (AuthHelper.authHelper.success) {
+        String? email = await FirebaseAuth.instance.currentUser!.email;
 
         await getCustomerFromFirebase();
         if (AppConstants.loggedCustomer != null) {
-          if(AppConstants.loggedCustomer!.isAccept==false &&AppConstants.loggedCustomer!.isReject==false){
+          if (AppConstants.loggedCustomer!.isAccept == false &&
+              AppConstants.loggedCustomer!.isReject == false) {
             return showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  content:  const Text('Waiting for Accept'),
-                  actions:[
+                  content: const Text('Waiting for Accept'),
+                  actions: [
                     Row(
-                      mainAxisAlignment:MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(false),
-                          child:  Text('Ok'),
+                          child: Text('Ok'),
                         ),
                       ],
                     ),
-
                   ],
                 );
               },
             );
-          }else if(AppConstants.loggedCustomer!.isAccept==true){
-
-              Get.to(MainNavBar());
-
-
-          }else{
+          }
+          else if (AppConstants.loggedCustomer!.isAccept == true) {
+            Get.to(MainNavBar());
+          } else {
             return showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  content:  const Text('Reject from app'),
-                  actions:[
+                  content: const Text('Reject from app'),
+                  actions: [
                     Row(
-                      mainAxisAlignment:MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(false),
-                          child:  Text('Ok'),
+                          child: Text('Ok'),
                         ),
                       ],
                     ),
-
                   ],
                 );
               },
@@ -101,31 +105,31 @@ login(BuildContext context,String email,String password) async {
             backgroundColor: Colors.red,
           ));
         }
-
+      }
+    } on Exception catch (e) {
+      return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString().split(']').last),
+        backgroundColor: Colors.red,
+      ));
     }
-
-  } on Exception catch (e) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(e.toString().split(']').last),
-      backgroundColor: Colors.red,
-    ));
   }
-}
-getCustomerFromFirebase() async {
-  String userId = FirebaseAuth.instance.currentUser!.uid;
-  AppConstants.loggedCustomer = await FirestoreHelper.firestoreHelper.getUserFromWaiting(userId);
-  // AppConstants.loggedUser ??= await FirestoreHelper.firestoreHelper.getUserFromAccepted(userId);
-  // AppConstants.loggedUser ??= await FirestoreHelper.firestoreHelper.getUserFromReject(userId);
-  notifyListeners();
-}
 
-logOut() async {
-  AppConstants.loggedCustomer = null;
-  await AuthHelper.authHelper.logout();
-  Get.off(Login());
-}
+  getCustomerFromFirebase() async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    AppConstants.loggedCustomer =
+        await FirestoreHelper.firestoreHelper.getUserFromWaiting(userId);
+    //AppConstants.loggedCustomer ??= await FirestoreHelper.firestoreHelper.getCustomerFromAccepted(userId);
+    //AppConstants.loggedCustomer ??= await FirestoreHelper.firestoreHelper.getCustomerFromReject(userId);
+    notifyListeners();
+  }
 
-forgetPassword(String email) async {
-  AuthHelper.authHelper.forgetPassword(email);
-}
+  logOut() async {
+    AppConstants.loggedCustomer = null;
+    await AuthHelper.authHelper.logout();
+    Get.off(Login());
+  }
+
+  forgetPassword(String email) async {
+    AuthHelper.authHelper.forgetPassword(email);
+  }
 }

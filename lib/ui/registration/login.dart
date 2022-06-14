@@ -12,7 +12,6 @@ import '../../resources/color_manager.dart';
 import '../../resources/font_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../servisers/auth_provider.dart';
-import '../nav_bar/coustomer_navbar.dart';
 
 
 class Login extends StatelessWidget {

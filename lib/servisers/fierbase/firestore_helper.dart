@@ -35,21 +35,21 @@ class FirestoreHelper{
   }
   Future<CustomerModel> getCustomerFromAccepted(String userid) async {
     DocumentSnapshot<Map<String, dynamic>> document =
-    await firebaseFirestore.collection('Customers').doc(userid).get();
+    await firebaseFirestore.collection('Customer').doc(userid).get();
     Map<String, dynamic>? customersData = document.data();
     customersData?['id'] = document.id;
     if(customersData !=null) {
       CustomerModel gdCustomer = CustomerModel.fromMap(customersData);
       return gdCustomer;
     }
-    return getUserFromReject(userid);
+    return getCustomerFromReject(userid);
   }
-  Future<CustomerModel> getUserFromReject(String userid) async {
-    DocumentSnapshot<Map<String, dynamic>> document =
-    await firebaseFirestore.collection('customersRejected').doc(userid).get();
+  Future<CustomerModel> getCustomerFromReject(String userid) async {
+    DocumentSnapshot<Map<String, dynamic>>? document =
+    await firebaseFirestore.collection('CustomersRejected').doc(userid).get();
     Map<String, dynamic>? customersData = document.data();
     customersData?['id'] = document.id;
-    CustomerModel gdCustomer = CustomerModel.fromMap(customersData!);
+    CustomerModel gdCustomer = CustomerModel?.fromMap(customersData!);
     return gdCustomer;
   }
   Future<List<CustomerModel>> getAllCustomersWaiting() async {

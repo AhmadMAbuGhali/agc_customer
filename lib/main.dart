@@ -1,7 +1,5 @@
-import 'package:agc_customer/resources/theme_manager.dart';
 import 'package:agc_customer/servisers/auth_provider.dart';
-import 'package:agc_customer/ui/order/new_order_product_details.dart';
-import 'package:agc_customer/ui/registration/login.dart';
+
 import 'package:agc_customer/ui/registration/splash_screen.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +15,7 @@ Future <void> main() async {
   await ScreenUtil.ensureScreenSize();
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
     ChangeNotifierProvider<FireBaseProvider>(create: (_) => FireBaseProvider()),
@@ -63,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         );
 
       },
-      child:  Login(),
+      child:  SplashScreen(),
 
     );
 
