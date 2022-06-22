@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:agc_customer/model/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../model/customer_model.dart';
@@ -75,6 +76,19 @@ class FirestoreHelper{
       log("firestore helper documentMap['id']: ${documentMap['id']}");
       CustomerModel customerModel = CustomerModel.fromMap(documentMap);
       return customerModel;
+    }).toList();
+    return allAsset;
+  }
+  Future<List<ProductModel>> getAllProduct() async {
+    QuerySnapshot<Map<String, dynamic>> allAssetSnapshot =
+    await firebaseFirestore.collection('Product').get();
+    List<ProductModel> allAsset = allAssetSnapshot.docs.map((e) {
+      Map<String, dynamic> documentMap = e.data();
+      documentMap['id'] = e.id;
+      log('firestore helper e.id: ${e.id}');
+      log("firestore helper documentMap['id']: ${documentMap['id']}");
+      ProductModel productModel = ProductModel.fromMap(documentMap);
+      return productModel;
     }).toList();
     return allAsset;
   }

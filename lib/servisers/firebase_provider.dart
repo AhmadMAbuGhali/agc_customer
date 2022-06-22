@@ -6,6 +6,7 @@ import 'dart:developer';
 
 
 import 'package:agc_customer/model/customer_model.dart';
+import 'package:agc_customer/model/product_model.dart';
 import 'package:flutter/material.dart';
 
 import 'fierbase/firestore_helper.dart';
@@ -14,10 +15,12 @@ class FireBaseProvider extends ChangeNotifier {
   FireBaseProvider() {
     getAllWaitingCustomer();
     getAllCustomer();
+    getAllProduct();
   }
 
   List<CustomerModel> watingCustomer=[];
   List<CustomerModel> allCustomer=[];
+  List<ProductModel> allProduct=[];
   getAllWaitingCustomer()async{
     watingCustomer=await FirestoreHelper.firestoreHelper.getAllCustomersWaiting();
     log(watingCustomer.length.toString());
@@ -43,7 +46,10 @@ class FireBaseProvider extends ChangeNotifier {
     await  FirestoreHelper.firestoreHelper.deletefromCustomerAwaiting(userId);
     notifyListeners();
   }
-
+  getAllProduct() async {
+    allProduct= await FirestoreHelper.firestoreHelper.getAllProduct();
+    notifyListeners();
+  }
 
 
 

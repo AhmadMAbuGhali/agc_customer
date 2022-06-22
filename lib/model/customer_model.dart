@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class CustomerModel {
   late String name;
   late String email;
@@ -20,9 +18,6 @@ class CustomerModel {
       this.isAccept =false,
     this.isReject =false,
 });
-
-
-
   CustomerModel.fromMap(Map<String, dynamic> map) {
     id=map['id'];
     name = map['name'];
@@ -33,7 +28,6 @@ class CustomerModel {
     address = map['address'];
     isAccept = map['isAccept'];
     isReject = map['isReject'];
-
   }
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = <String, dynamic>{};
@@ -46,12 +40,6 @@ class CustomerModel {
     map['address'] = address;
     map['isAccept'] = isAccept;
     map['isReject'] = isReject;
-
-
     return map;
   }
-
-
-
-
 }

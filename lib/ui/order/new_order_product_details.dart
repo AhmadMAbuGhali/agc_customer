@@ -76,32 +76,10 @@ class _NewOrderProuductDetailsState extends State<NewOrderProductDetails> {
               SizedBox(
                 height: 15.h,
               ),
+
               Row(
                 children: [
-                  const Text("وزن 25 كجم"),
-                  SizedBox(
-                    width: 30.w,
-                  ),
-                  Container(
-                      width: 100.w,
-                      height: 32.h,
-                      child: TextFormField(
-                        style: TextStyle(fontSize: 16.0, color: Colors.black),
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            fillColor: ColorManager.gray),
-                        keyboardType: TextInputType.numberWithOptions(),
-                      ))
-                ],
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Row(
-                children: [
-                  const Text("وزن 50 كجم"),
+                  const Text("الكمية التي تريد طلبها "),
                   SizedBox(
                     width: 30.w,
                   ),
