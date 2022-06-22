@@ -6,6 +6,8 @@ class ImageAssets {
   static const String wait = '$IMAGE_PATH/wait_image.png';
   static const String test = '$IMAGE_PATH/test_image.png';
 
+  static const String cartEpty = '$IMAGE_PATH/empty_cart.svg';
+
 
 
 }
