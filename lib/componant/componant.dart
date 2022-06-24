@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:agc_customer/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -112,7 +113,7 @@ Widget OrderDetails() => Container(
         ],
       ),
     );
-Widget NewOrderProductList() => Container(
+Widget NewOrderProductList(ProductModel productModel) => Container(
   height: 100.h,
   margin: EdgeInsets.symmetric(vertical: 18.h),
   decoration: BoxDecoration(
@@ -140,21 +141,21 @@ Widget NewOrderProductList() => Container(
             offset: Offset(0, 0), // changes position of shadow
           ),
         ], borderRadius: BorderRadius.circular(30.r)),
-        child: const CircleAvatar(
+        child:   CircleAvatar(
           radius: 30.0,
           backgroundImage: NetworkImage(
-              'https://miro.medium.com/max/1000/1*wnKTi_JRAZJ58WeWaCn7yw.jpeg'),
+              productModel.imagePath!),
           backgroundColor: Colors.transparent,
         ),
       ),
       Spacer(flex: 1,),
       Text(
-        'دقيق حيفا',
+        productModel.productName +" "+productModel.wight,
         style: getBoldStyle(
             color: ColorManager.black, fontSize: FontSize.s14),
       ),
       Spacer(flex: 1,),
-      ElevatedButton(onPressed: ()=>Get.to(NewOrderProductDetails()), child: Text('اطلب الان',style: getMediumStyle(color: ColorManager.white),))
+      ElevatedButton(onPressed: ()=>Get.to(NewOrderProductDetails(productModel: productModel,)), child: Text('اطلب الان',style: getMediumStyle(color: ColorManager.white),))
     ],
   ),
 );

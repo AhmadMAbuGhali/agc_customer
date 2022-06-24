@@ -21,6 +21,7 @@ class FireBaseProvider extends ChangeNotifier {
   List<CustomerModel> watingCustomer=[];
   List<CustomerModel> allCustomer=[];
   List<ProductModel> allProduct=[];
+  List<ProductModel> cartProduct=[];
   getAllWaitingCustomer()async{
     watingCustomer=await FirestoreHelper.firestoreHelper.getAllCustomersWaiting();
     log(watingCustomer.length.toString());

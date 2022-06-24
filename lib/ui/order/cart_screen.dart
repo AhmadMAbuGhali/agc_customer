@@ -1,3 +1,5 @@
+import 'package:agc_customer/model/product_model.dart';
+import 'package:agc_customer/servisers/firebase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +10,6 @@ import '../../resources/font_manager.dart';
 import '../../resources/strings_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../servisers/auth_provider.dart';
-import '../nav_bar/main_navbar.dart';
 
 class CartScreen extends StatelessWidget {
   CartScreen({Key? key}) : super(key: key);
@@ -24,8 +25,8 @@ class CartScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(AppStrings.cart),
         ),
-        body: Consumer<AuthProvider>(builder: (context, provider, x) {
-          return provider.productInWishList.isEmpty
+        body: Consumer<FireBaseProvider>(builder: (context, provider, x) {
+          return provider.cartProduct.isEmpty
               ? emptyCart(context)
               : fullCart(context);
         }));
@@ -48,7 +49,7 @@ Widget emptyCart(BuildContext context) {
             decoration: BoxDecoration(
                 color: ColorManager.parent,
                 image:
-                    DecorationImage(image: AssetImage(ImageAssets.cartEpty))),
+                    DecorationImage(image: AssetImage(IconAssets.cartEpty))),
           ),
           SizedBox(
             height: 18.h,
@@ -63,19 +64,7 @@ Widget emptyCart(BuildContext context) {
           SizedBox(
             height: 23.h,
           ),
-          SizedBox(
-              width: 194.w,
-              height: 44.h,
-              child: ElevatedButton(
-                  onPressed: () {
-                    // RouterClass.routerClass
-                    //     .pushWidgetRemovePrev(MainNavBar(), context);
-                  },
-                  child: Text(
-                    'تصفح في مارسيلا ',
-                    style: getBoldStyle(
-                        color: ColorManager.black, fontSize: FontSize.s14.sp),
-                  )))
+
         ]),
       ),
     ),
@@ -90,7 +79,7 @@ Widget fullCart(BuildContext context) {
   return Directionality(
     textDirection: TextDirection.rtl,
     child: SingleChildScrollView(
-      child: Consumer<AuthProvider>(builder: (context, provider, x) {
+      child: Consumer<FireBaseProvider>(builder: (context, provider, x) {
         return Container(
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.symmetric(horizontal: 16.w),
@@ -102,7 +91,7 @@ Widget fullCart(BuildContext context) {
               SizedBox(
                 height: 550.h,
                 child: ListView.builder(
-                    itemCount: provider.productInWishList.length,
+                    itemCount: provider.cartProduct.length,
                     itemBuilder: (context, index) {
                       ScreenUtil.init(
                         context,
@@ -115,7 +104,7 @@ Widget fullCart(BuildContext context) {
                           // provider.itemCart.
                         },
                         child: cartWidget(
-                          product: provider.productInWishList[index],
+                          product: provider.cartProduct[index],
                           ind: index,
                         ),
                         confirmDismiss: (DismissDirection direction) async {
@@ -129,8 +118,8 @@ Widget fullCart(BuildContext context) {
                                 actions: <Widget>[
                                   ElevatedButton(
                                       onPressed: () {
-                                        provider.deleteWishlistProduct(index);
-                                        Navigator.of(context).pop(true);
+                                        // provider.deleteWishlistProduct(index);
+                                        // Navigator.of(context).pop(true);
                                       },
                                       child: const Text("DELETE")),
                                   ElevatedButton(
@@ -149,7 +138,7 @@ Widget fullCart(BuildContext context) {
                               borderRadius: BorderRadius.circular(8.r)),
                           padding: EdgeInsets.only(right: 20.w),
                           alignment: Alignment.centerRight,
-                          child: Icon(
+                          child: const Icon(
                             Icons.delete_forever,
                             color: Colors.white,
                           ),
@@ -160,7 +149,7 @@ Widget fullCart(BuildContext context) {
               Row(
                 children: [
                   SizedBox(
-                      width: 250.w,
+                      width: 280.w,
                       height: 44.h,
                       child: ElevatedButton(
                           onPressed: () {
@@ -174,24 +163,7 @@ Widget fullCart(BuildContext context) {
                                 color: ColorManager.black,
                                 fontSize: FontSize.s14.sp),
                           ))),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        'المجموع الكلي',
-                        style: getMediumStyle(
-                            color: ColorManager.black, fontSize: FontSize.s14),
-                      ),
-                      Text(
-                        provider.allPrice.toString(),
-                        style: getBoldStyle(
-                            color: ColorManager.cartPrice,
-                            fontSize: FontSize.s16),
-                      ),
-                    ],
-                  ),
+
                 ],
               )
             ],
@@ -205,7 +177,7 @@ Widget fullCart(BuildContext context) {
 class cartWidget extends StatelessWidget {
   cartWidget({Key? key, required this.product, required this.ind})
       : super(key: key);
-  Product product;
+  ProductModel product;
   int ind;
 
   @override
@@ -241,7 +213,7 @@ class cartWidget extends StatelessWidget {
                   color: ColorManager.parent,
                   borderRadius: BorderRadius.circular(8.r),
                   image: DecorationImage(
-                    image: NetworkImage(product.images!.first.src!),
+                    image: NetworkImage(product.imagePath!),
                     fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                   )),
@@ -253,48 +225,24 @@ class cartWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.name!,
+                    product.productName +product.wight,
                     style: getBoldStyle(
                         color: ColorManager.black, fontSize: FontSize.s14),
                   ),
                   SizedBox(
                     height: 6.h,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        'المقاس :' + provider.sized[ind],
-                        style: getMediumStyle(
-                            color: ColorManager.black,
-                            fontSize: FontSize.s14.sp),
-                      ),
-                      SizedBox(
-                        width: 15.w,
-                      ),
-                      Text(
-                        'اللون :' + 'أسود',
-                        style: getMediumStyle(
-                            color: ColorManager.black,
-                            fontSize: FontSize.s14.sp),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text(
-                    product.price!,
-                    style: getBoldStyle(
-                        color: ColorManager.black,
-                        fontSize: FontSize.s18.sp),
-                  ),
+
+
                   SizedBox(
                     height: 8.h,
                   ),
                   Row(children: [
                     InkWell(
                       onTap: () {
-                        provider.addQuntity(ind);
+                        product.quantity++;
+                        provider.notifyListeners();
+                        // provider.addQuntity(ind);
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -313,7 +261,7 @@ class cartWidget extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(top: 5.h),
                       child: Text(
-                        provider.quntityp[ind].toString(),
+                        product.quantity.toString(),
                         style: getBoldStyle(
                             color: ColorManager.black,
                             fontSize: FontSize.s16.sp),
@@ -324,9 +272,10 @@ class cartWidget extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        // if(provider.quntityp[ind]>1){
-                        //   provider.deleteQuntity(ind);
-                        // }
+                        if(product.quantity>1){
+                        product.quantity--;
+                        provider.notifyListeners();
+                        }
                       },
                       child: Container(
                         alignment: Alignment.center,

@@ -6,14 +6,14 @@ class ImageAssets {
   static const String wait = '$IMAGE_PATH/wait_image.png';
   static const String test = '$IMAGE_PATH/test_image.png';
 
-  static const String cartEpty = '$IMAGE_PATH/empty_cart.svg';
+
 
 
 
 }
 const String ICON_PATH='assets/icon';
 class IconAssets{
-
+  static const String cartEpty = '$ICON_PATH/empty_cart.svg';
   static const String complete_order='$ICON_PATH/completeorder.svg';
   static const String notification='$ICON_PATH/notification.svg';
   static const String tracking='$ICON_PATH/tracking.svg';
