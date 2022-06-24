@@ -53,7 +53,7 @@ class FireBaseProvider extends ChangeNotifier {
     notifyListeners();
   } 
   addOrder(Order order) async {
-    allProduct= await FirestoreHelper.firestoreHelper.addOrder(order);
+     await FirestoreHelper.firestoreHelper.addOrder(order);
     notifyListeners();
   }
 
