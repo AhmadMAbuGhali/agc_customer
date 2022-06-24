@@ -102,6 +102,7 @@ TextEditingController controllerQuntity=TextEditingController();
                   height: 70.h,
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GestureDetector(
                      onTap: (){
@@ -110,7 +111,7 @@ TextEditingController controllerQuntity=TextEditingController();
 
                      },
                       child: Container(
-                          width: 150.w,
+                          width: 250.w,
                           height: 52.h,
                           decoration: BoxDecoration(
                             color: ColorManager.textOrange,
@@ -123,44 +124,7 @@ TextEditingController controllerQuntity=TextEditingController();
                             ),
                           )),
                     ),
-                    SizedBox(
-                      width: 25.w,
-                    ),
-                    GestureDetector(
-                      onTap: (){
 
-                      },
-                      child: Container(
-                          width: 150.w,
-                          height: 52.h,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: ColorManager.textOrange,
-                                width: 1
-                              ),
-                              color: ColorManager.white,
-                              borderRadius: BorderRadius.circular(15.r)
-
-                          ),
-                          child: Center(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  IconAssets.calendar,
-                                  height: 25.h,
-                                  width: 25.w,
-                                  color: ColorManager.textOrange,
-                                ),
-                                Text(
-                                  'طلب مجدول',
-                                  style: getBoldStyle(color: ColorManager.textOrange,),
-                                ),
-                              ],
-                            ),
-                          )),
-                    ),
                   ],
                 )
               ],
