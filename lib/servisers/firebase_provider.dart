@@ -6,6 +6,7 @@ import 'dart:developer';
 
 
 import 'package:agc_customer/model/customer_model.dart';
+import 'package:agc_customer/model/order.dart';
 import 'package:agc_customer/model/product_model.dart';
 import 'package:flutter/material.dart';
 
@@ -49,6 +50,10 @@ class FireBaseProvider extends ChangeNotifier {
   }
   getAllProduct() async {
     allProduct= await FirestoreHelper.firestoreHelper.getAllProduct();
+    notifyListeners();
+  } 
+  addOrder(Order order) async {
+    allProduct= await FirestoreHelper.firestoreHelper.addOrder(order);
     notifyListeners();
   }
 

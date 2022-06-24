@@ -1,4 +1,6 @@
+import 'package:agc_customer/model/order.dart';
 import 'package:agc_customer/model/product_model.dart';
+import 'package:agc_customer/resources/constants_manager.dart';
 import 'package:agc_customer/servisers/firebase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,8 @@ import '../../resources/font_manager.dart';
 import '../../resources/strings_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../servisers/auth_provider.dart';
+
+DateTime selectedDate = DateTime.now();
 
 class CartScreen extends StatelessWidget {
   CartScreen({Key? key}) : super(key: key);
@@ -48,8 +52,7 @@ Widget emptyCart(BuildContext context) {
             height: 190.h,
             decoration: BoxDecoration(
                 color: ColorManager.parent,
-                image:
-                    DecorationImage(image: AssetImage(IconAssets.cartEpty))),
+                image: DecorationImage(image: AssetImage(IconAssets.cartEpty))),
           ),
           SizedBox(
             height: 18.h,
@@ -64,7 +67,6 @@ Widget emptyCart(BuildContext context) {
           SizedBox(
             height: 23.h,
           ),
-
         ]),
       ),
     ),
@@ -149,13 +151,44 @@ Widget fullCart(BuildContext context) {
               Row(
                 children: [
                   SizedBox(
+                      width: 150.w,
+                      height: 44.h,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            getDateFromUser(context);
+
+                          },
+                          child: Text(
+                            'تاريخ الطلب',
+                            style: getBoldStyle(
+                                color: ColorManager.black,
+                                fontSize: FontSize.s14.sp),
+                          ))),
+                  SizedBox(
                       width: 280.w,
                       height: 44.h,
                       child: ElevatedButton(
                           onPressed: () {
-                            // RouterClass.routerClass
-                            //     .pushWidget(ConfirmOrderScreen());
-                            // // DioClient.dioClient.login();
+                            List<LineItemsPost> allItem = [];
+                            for (int i = 0;
+                                i < provider.cartProduct.length;
+                                i++) {
+                              LineItemsPost lineItem = LineItemsPost(
+                                  productId: provider.cartProduct[i].id,
+                                  quantity: provider.cartProduct[i].quantity);
+                              allItem.add(lineItem);
+                            }
+                            Order order = Order(
+                                lineItems: allItem,
+                                customerId: AppConstants.loggedCustomer!.id,
+                                date: selectedDate.toString(),
+                                status: 'waiting',
+                                customerName: AppConstants.loggedCustomer!.name,
+                                company:
+                                    AppConstants.loggedCustomer!.bakeryName,
+                                phone:
+                                    AppConstants.loggedCustomer!.phoneNumber);
+                            provider.addOrder(order);
                           },
                           child: Text(
                             'التقدم لإتمام الطلب',
@@ -163,7 +196,6 @@ Widget fullCart(BuildContext context) {
                                 color: ColorManager.black,
                                 fontSize: FontSize.s14.sp),
                           ))),
-
                 ],
               )
             ],
@@ -172,6 +204,19 @@ Widget fullCart(BuildContext context) {
       }),
     ),
   );
+}
+
+getDateFromUser(BuildContext context) async {
+  DateTime? _pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2030));
+  if (_pickedDate != null) {
+    selectedDate = _pickedDate;
+  } else {
+    print('');
+  }
 }
 
 class cartWidget extends StatelessWidget {
@@ -225,15 +270,13 @@ class cartWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.productName +product.wight,
+                    product.productName + product.wight,
                     style: getBoldStyle(
                         color: ColorManager.black, fontSize: FontSize.s14),
                   ),
                   SizedBox(
                     height: 6.h,
                   ),
-
-
                   SizedBox(
                     height: 8.h,
                   ),
@@ -272,9 +315,9 @@ class cartWidget extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        if(product.quantity>1){
-                        product.quantity--;
-                        provider.notifyListeners();
+                        if (product.quantity > 1) {
+                          product.quantity--;
+                          provider.notifyListeners();
                         }
                       },
                       child: Container(

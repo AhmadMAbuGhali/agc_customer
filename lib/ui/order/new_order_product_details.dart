@@ -13,7 +13,7 @@ class NewOrderProductDetails extends StatelessWidget {
     NewOrderProductDetails({Key? key,required this.productModel}) : super(key: key);
   ProductModel productModel;
 TextEditingController controllerQuntity=TextEditingController();
-  DateTime _selectedDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -128,7 +128,7 @@ TextEditingController controllerQuntity=TextEditingController();
                     ),
                     GestureDetector(
                       onTap: (){
-                        _getDateFromUser(context);
+
                       },
                       child: Container(
                           width: 150.w,
@@ -172,21 +172,7 @@ TextEditingController controllerQuntity=TextEditingController();
     );
 
   }
-    _getDateFromUser(BuildContext context) async {
-      DateTime? _pickedDate = await showDatePicker(
-          context: context,
-          initialDate: _selectedDate,
-          firstDate: DateTime(2015),
-          lastDate: DateTime(2030));
 
-      if (_pickedDate != null) {
-
-          _selectedDate = _pickedDate;
-
-      } else {
-        print('');
-      }
-    }
 
 }
 

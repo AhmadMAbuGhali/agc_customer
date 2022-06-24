@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:agc_customer/model/order.dart';
 import 'package:agc_customer/model/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -91,5 +92,10 @@ class FirestoreHelper{
       return productModel;
     }).toList();
     return allAsset;
+  }
+  addOrder(Order order) async{
+    String id = firebaseFirestore.collection('SalesPersonOrderWaiting').doc().id;
+    order.id=id ;
+    await firebaseFirestore.collection('SalesPersonOrderWaiting').doc(id).set(order.toMap());
   }
 }

@@ -1,8 +1,8 @@
 
 class Order {
-  int? id;
+  String? id;
   List<LineItemsPost>? lineItems;
-  int? customerId;
+  String? customerId;
   String? date;
   String? status;
   String? customerName;
@@ -54,7 +54,7 @@ class Order {
 }
 
 class LineItemsPost {
-  int? productId;
+  String? productId;
   int? quantity;
   LineItemsPost({this.productId, this.quantity});
   LineItemsPost.fromMap(Map<String, dynamic> map) {
