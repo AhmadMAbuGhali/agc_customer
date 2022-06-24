@@ -95,7 +95,7 @@ class FirestoreHelper{
   }
   addOrder(Order order) async{
     String id = firebaseFirestore.collection('SalesPersonOrderWaiting').doc().id;
-    order.id=id ;
+    order.id=id;
     await firebaseFirestore.collection('SalesPersonOrderWaiting').doc(id).set(order.toMap());
   }
   getOrder() async{

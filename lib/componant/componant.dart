@@ -159,7 +159,7 @@ Widget NewOrderProductList(ProductModel productModel) => Container(
     ],
   ),
 );
-Widget RefundOrderProductList() => Container(
+Widget RefundOrderProductList(ProductModel productModel) => Container(
   height: 100.h,
   margin: EdgeInsets.symmetric(vertical: 18.h),
   decoration: BoxDecoration(
@@ -187,21 +187,21 @@ Widget RefundOrderProductList() => Container(
             offset: Offset(0, 0), // changes position of shadow
           ),
         ], borderRadius: BorderRadius.circular(30.r)),
-        child: const CircleAvatar(
+        child:  CircleAvatar(
           radius: 30.0,
           backgroundImage: NetworkImage(
-              'https://miro.medium.com/max/1000/1*wnKTi_JRAZJ58WeWaCn7yw.jpeg'),
+              productModel.imagePath!),
           backgroundColor: Colors.transparent,
         ),
       ),
       Spacer(flex: 1,),
       Text(
-        'دقيق حيفا',
+productModel.productName +" "+productModel.wight,
         style: getBoldStyle(
             color: ColorManager.black, fontSize: FontSize.s14),
       ),
       Spacer(flex: 1,),
-      ElevatedButton(onPressed: ()=>Get.to(RefundOrderProductDetails()), child: Text('اطلب الان',style: getMediumStyle(color: ColorManager.white),))
+      ElevatedButton(onPressed: ()=>Get.to(RefundOrderProductDetails(productModel: productModel,)), child: Text('اطلب الان',style: getMediumStyle(color: ColorManager.white),))
     ],
   ),
 );
@@ -533,7 +533,7 @@ Widget CompletedOrder() => Container(
                     SizedBox(
                       width: 15.w,
                     ),
-              
+
                   ],
                 ),
                 SizedBox(
