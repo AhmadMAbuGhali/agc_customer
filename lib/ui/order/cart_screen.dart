@@ -2,8 +2,10 @@ import 'package:agc_customer/model/order.dart';
 import 'package:agc_customer/model/product_model.dart';
 import 'package:agc_customer/resources/constants_manager.dart';
 import 'package:agc_customer/servisers/firebase_provider.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../resources/assets_manager.dart';
@@ -164,8 +166,9 @@ Widget fullCart(BuildContext context) {
                                 color: ColorManager.black,
                                 fontSize: FontSize.s14.sp),
                           ))),
+                  SizedBox(width: 20,),
                   SizedBox(
-                      width: 280.w,
+                      width: 150.w,
                       height: 44.h,
                       child: ElevatedButton(
                           onPressed: () {
@@ -189,6 +192,7 @@ Widget fullCart(BuildContext context) {
                                 phone:
                                     AppConstants.loggedCustomer!.phoneNumber);
                             provider.addOrder(order);
+                            Get.back();
                           },
                           child: Text(
                             'التقدم لإتمام الطلب',
@@ -207,16 +211,21 @@ Widget fullCart(BuildContext context) {
 }
 
 getDateFromUser(BuildContext context) async {
+
   DateTime? _pickedDate = await showDatePicker(
+
       context: context,
       initialDate: selectedDate,
+
       firstDate: DateTime(2015),
       lastDate: DateTime(2030));
+      DateTimePickerType.date;
   if (_pickedDate != null) {
     selectedDate = _pickedDate;
   } else {
     print('');
   }
+
 }
 
 class cartWidget extends StatelessWidget {
