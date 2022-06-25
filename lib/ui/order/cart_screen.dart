@@ -121,9 +121,9 @@ Widget fullCart(BuildContext context) {
                                     "Are you sure you wish to delete this item?"),
                                 actions: <Widget>[
                                   ElevatedButton(
-                                      onPressed: () {
-                                        // provider.deleteWishlistProduct(index);
-                                        // Navigator.of(context).pop(true);
+                                      onPressed: (){
+                                      provider.deleteFromCart(index);
+                                        Navigator.of(context).pop(true);
                                       },
                                       child: const Text("DELETE")),
                                   ElevatedButton(

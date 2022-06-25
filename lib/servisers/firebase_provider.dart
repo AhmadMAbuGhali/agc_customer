@@ -23,6 +23,9 @@ class FireBaseProvider extends ChangeNotifier {
   List<CustomerModel> allCustomer=[];
   List<ProductModel> allProduct=[];
   List<ProductModel> cartProduct=[];
+  deleteFromCart(int index){
+    cartProduct.removeAt(index);
+  }
   getAllWaitingCustomer()async{
     watingCustomer=await FirestoreHelper.firestoreHelper.getAllCustomersWaiting();
     log(watingCustomer.length.toString());

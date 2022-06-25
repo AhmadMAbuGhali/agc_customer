@@ -98,6 +98,7 @@ class FirestoreHelper{
     order.id=id;
     await firebaseFirestore.collection('SalesPersonOrderWaiting').doc(id).set(order.toMap());
   }
+
   getOrder() async{
     QuerySnapshot<Map<String, dynamic>> allAssetSnapshot =
     await firebaseFirestore.collection('SalesPersonOrderWaiting').get();
