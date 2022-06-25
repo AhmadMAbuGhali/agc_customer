@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:agc_customer/servisers/auth_provider.dart';
 import 'package:agc_customer/ui/order/cart_screen.dart';
 import 'package:agc_customer/ui/order/new_order_product_details.dart';
+import 'package:agc_customer/ui/registration/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -44,13 +46,17 @@ class NewOrder extends StatelessWidget {
                     ),
                     SizedBox(width: 10.w,),
                     GestureDetector(
-                      onTap: (){},
-                      child: SvgPicture.asset(
-                        IconAssets.person,
-                        height: 25.h,
-                        width: 25.w,
-                        color: ColorManager.primary,
-                      ),
+                      onTap: (){
+                        Provider.of<AuthProvider>(context,listen: false).logOut();
+                        Get.to(Login());
+                      },
+                      child: IconButton(
+                          onPressed: () {},
+                          icon:  Icon(
+                            Icons.logout,
+                            size: 27,
+                            color: ColorManager.primary,
+                          )),
                     ),
                   ],
                 ),

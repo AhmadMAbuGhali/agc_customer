@@ -8,7 +8,9 @@ import 'package:provider/provider.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
+import '../../servisers/auth_provider.dart';
 import '../../servisers/firebase_provider.dart';
+import '../registration/login.dart';
 import 'cart_screen.dart';
 
 class RefundOrder extends StatelessWidget {
@@ -41,13 +43,17 @@ class RefundOrder extends StatelessWidget {
                 ),
                 SizedBox(width: 10.w,),
                 GestureDetector(
-                  onTap: (){},
-                  child: SvgPicture.asset(
-                    IconAssets.person,
-                    height: 25.h,
-                    width: 25.w,
-                    color: ColorManager.primary,
-                  ),
+                  onTap: (){
+                    Provider.of<AuthProvider>(context,listen: false).logOut();
+                    Get.to(Login());
+                  },
+                  child: IconButton(
+                      onPressed: () {},
+                      icon:  Icon(
+                        Icons.logout,
+                        size: 27,
+                        color: ColorManager.primary,
+                      )),
                 ),
               ],
             ),

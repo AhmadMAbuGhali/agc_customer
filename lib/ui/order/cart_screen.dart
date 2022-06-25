@@ -54,7 +54,7 @@ Widget emptyCart(BuildContext context) {
             height: 190.h,
             decoration: BoxDecoration(
                 color: ColorManager.parent,
-                image: DecorationImage(image: AssetImage(IconAssets.cartEpty))),
+                image: DecorationImage(image: AssetImage(ImageAssets.empty_cart))),
           ),
           SizedBox(
             height: 18.h,

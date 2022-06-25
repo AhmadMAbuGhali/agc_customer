@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
+import '../../servisers/auth_provider.dart';
+import '../registration/login.dart';
 
 class NewOrderProductDetails extends StatelessWidget {
     NewOrderProductDetails({Key? key,required this.productModel}) : super(key: key);
@@ -44,13 +46,17 @@ TextEditingController controllerQuntity=TextEditingController();
                       width: 10.w,
                     ),
                     GestureDetector(
-                      onTap: () {},
-                      child: SvgPicture.asset(
-                        IconAssets.person,
-                        height: 25.h,
-                        width: 25.w,
-                        color: ColorManager.primary,
-                      ),
+                      onTap: (){
+                        Provider.of<AuthProvider>(context,listen: false).logOut();
+                        Get.to(Login());
+                      },
+                      child: IconButton(
+                          onPressed: () {},
+                          icon:  Icon(
+                            Icons.logout,
+                            size: 27,
+                            color: ColorManager.primary,
+                          )),
                     ),
                   ],
                 ),

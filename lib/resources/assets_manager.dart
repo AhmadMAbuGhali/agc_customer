@@ -5,6 +5,7 @@ class ImageAssets {
   static const String reg = '$IMAGE_PATH/reg.png';
   static const String wait = '$IMAGE_PATH/wait_image.png';
   static const String test = '$IMAGE_PATH/test_image.png';
+  static const String empty_cart = '$IMAGE_PATH/empty_cart.png';
 
 
 
