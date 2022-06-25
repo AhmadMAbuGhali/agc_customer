@@ -124,6 +124,7 @@ Widget fullCart(BuildContext context) {
                                       onPressed: (){
                                       provider.deleteFromCart(index);
                                         Navigator.of(context).pop(true);
+
                                       },
                                       child: const Text("DELETE")),
                                   ElevatedButton(

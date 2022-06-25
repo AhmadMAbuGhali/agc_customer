@@ -1,5 +1,5 @@
 
-class Order {
+class Order{
   String? id;
   List<LineItemsPost>? lineItems;
   String? customerId;
@@ -8,25 +8,22 @@ class Order {
   String? customerName;
   String? company;
   String? phone;
-  bool  isQuantityFull = false;
-  bool  isCompleteOrder = false;
-  int? orderNumber=0;
+  bool?  isQuantityFull ;
+  bool?  isCompleteOrder ;
+  String? orderNumber;
   Order(
-      {
-        this.id,
+      {this.id,
         this.lineItems,
         this.customerId,
         this.date,
         this.status,
         this.company,
         this.phone,
-        this.orderNumber,
+        this.orderNumber='0',
         this.customerName,
         this.isQuantityFull =false,
         this.isCompleteOrder =false,
-
-               });
-
+      });
   Order.fromMap(Map<String, dynamic> map) {
     id=map['id'];
     customerId = map['customerId'];
@@ -39,8 +36,10 @@ class Order {
     orderNumber = map['orderNumber'];
     isCompleteOrder = map['isCompleteOrder'];
     if(map['lineItems'] !=null){
-      map['lineItems'].forEach((v){
-        lineItems!.add(LineItemsPost.fromMap(v));
+      lineItems=[];
+      map['lineItems']?.forEach((v){
+        lineItems?.add(LineItemsPost.fromMap(v));
+
       });
     }
   }

@@ -32,12 +32,12 @@ class CompleteOrder extends StatelessWidget {
                     onTap: (){},
                     child: SvgPicture.asset(
                       IconAssets.cart,
-                      height: 25.h,
-                      width: 25.w,
+                      height: 20.h,
+                      width: 15.w,
                       color: ColorManager.primary,
                     ),
                   ),
-                  SizedBox(width: 10.w,),
+                  SizedBox(width: 3.w,),
                   GestureDetector(
                     onTap: (){
                       Provider.of<AuthProvider>(context,listen: false).logOut();
@@ -47,14 +47,14 @@ class CompleteOrder extends StatelessWidget {
                         onPressed: () {},
                         icon:  Icon(
                           Icons.logout,
-                          size: 27,
+                          size: 22,
                           color: ColorManager.primary,
                         )),
                   ),
                 ],
               ),
               SizedBox(height: 25.h,),
-              CompletedOrder()
+             CompletedOrder()
 
 
             ],

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../model/order.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
@@ -471,122 +472,117 @@ Widget WidgetSearchField({
 
 
 
-Widget CompletedOrder() => Container(
-      height: 135.h,
-      width: 350.w,
+Widget CompletedOrder(Order order) => Container(
+  height: 180.h,
 
-
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.r),
-        color: ColorManager.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 0,
-            blurRadius: 6,
-            offset: Offset(0, 2), // changes position of shadow
-          ),
-        ],
+// margin: EdgeInsets.symmetric(vertical: 18.h,horizontal: 20.w),
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(8.r),
+    color: ColorManager.white,
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withOpacity(0.2),
+        spreadRadius: 0,
+        blurRadius: 6,
+        offset: Offset(0, 2), // changes position of shadow
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
+    ],
+  ),
+  child: Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
 
-          Container(
-            padding: EdgeInsets.only(top: 5.h, right: 5.w),
-            decoration: BoxDecoration(),
-            child: const CircleAvatar(
-              radius: 38.0,
-              backgroundImage: NetworkImage(
-                  'https://miro.medium.com/max/1000/1*wnKTi_JRAZJ58WeWaCn7yw.jpeg'),
-              backgroundColor: Colors.transparent,
+      Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              order.company!,
+              style: getBoldStyle(
+                  color: ColorManager.black, fontSize: FontSize.s14),
             ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 9.h, horizontal: 10.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            SizedBox(
+              height: 6.h,
+            ),
+            Row(
               children: [
                 Text(
-                  'هذا النص هو مثال لنص',
-                  style: getBoldStyle(
-                      color: ColorManager.black, fontSize: FontSize.s14),
+                  'الزبون: ',
+                  style: getMediumStyle(
+                      color: ColorManager.black, fontSize: FontSize.s14.sp),
                 ),
-                SizedBox(
-                  height: 6.h,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'وزن 25 كجم: ',
-                      style: getMediumStyle(
-                          color: ColorManager.black, fontSize: FontSize.s14.sp),
-                    ),
-                    Text(
-                      '100',
-                      style: getMediumStyle(
-                          color: ColorManager.gray, fontSize: FontSize.s14.sp),
-                    ),
-                    SizedBox(
-                      width: 15.w,
-                    ),
-
-                  ],
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'وزن 50 كجم: ',
-                      style: getMediumStyle(
-                          color: ColorManager.black, fontSize: FontSize.s14.sp),
-                    ),
-                    Text(
-                      '50',
-                      style: getMediumStyle(
-                          color: ColorManager.gray, fontSize: FontSize.s14.sp),
-                    ),
-
-                  ],
-                ),
-                SizedBox(
-                  height: 10.h,
+                Text(
+                  order.customerName!,
+                  style: getMediumStyle(
+                      color: ColorManager.gray, fontSize: FontSize.s14.sp),
                 ),
 
-                Row(
-                  children: [
-                    Text(
-                      'رقم الطلبية: ',
-                      style: getMediumStyle(
-                          color: ColorManager.black, fontSize: FontSize.s14.sp),
-                    ),
-                    Text(
-                      '400',
-                      style: getMediumStyle(
-                          color: ColorManager.gray, fontSize: FontSize.s14.sp),
-                    ),
-                    SizedBox(width:  40.w,),
-                    SvgPicture.asset(
-                      IconAssets.calendar,
-                      height: 16.h,
-                      width: 16.w,
-                      color: ColorManager.primary,
-                    ),
-                    SizedBox(width: 4.w,),
-                    Text('12/12/2022',style: getLightStyle(color: ColorManager.gray),)
-                  ],
+              ],
+            ),
+            SizedBox(
+              height: 4.h,
+            ),
+            Row(
+              children: [
+                Text(
+                  'رقم الهاتف :  ',
+                  style: getMediumStyle(
+                      color: ColorManager.black, fontSize: FontSize.s14.sp),
+                ),
+                Text(
+                  order.phone!,
+                  style: getMediumStyle(
+                      color: ColorManager.gray, fontSize: FontSize.s14.sp),
                 ),
               ],
             ),
-          ),
-        ],
+            SizedBox(
+              height: 4.h,
+            ),
+
+            Row(
+              children: [
+                Text(
+                  'رقم الطلبية: ',
+                  style: getMediumStyle(
+                      color: ColorManager.black, fontSize: FontSize.s14.sp),
+                ),
+                Text(
+                  order.orderNumber!,
+                  style: getMediumStyle(
+                      color: ColorManager.gray, fontSize: FontSize.s14.sp),
+                ),
+                SizedBox(
+                  width: 15.w,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 4.h,
+            ),
+            Row(
+              children: [
+                Text(
+                  ': تاريخ الطلب: ',
+                  style: getMediumStyle(
+                      color: ColorManager.black, fontSize: FontSize.s14.sp),
+                ),
+                Text(
+                  order.date!,
+                  style: getMediumStyle(
+                      color: ColorManager.gray, fontSize: FontSize.s14.sp),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-    );
+    ],
+  ),
+);
 
 
 
