@@ -7,63 +7,69 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import 'login.dart';
+
 class Splash2 extends StatelessWidget {
    Splash2({ Key? key}) : super(key: key);
    User? user;
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 0)).then((v) async{
-      await Provider.of<AuthProvider>(context,listen: false).getCustomerFromFirebase();
-      user = FirebaseAuth.instance.currentUser;
-      if (AppConstants.loggedCustomer != null) {
-        if (AppConstants.loggedCustomer!.isAccept == false &&
-            AppConstants.loggedCustomer!.isReject == false) {
-          return showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                content: const Text('Waiting for Accept'),
-                actions: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        child: Text('Ok'),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            },
-          );
-        }
-        else if (AppConstants.loggedCustomer!.isAccept == true) {
-          RouterClass.routerClass.pushWidgetReplacement(MainNavBar());
+       user = await FirebaseAuth.instance.currentUser;
+      if(user == null){
+        Get.to(Login());
+      }else {
+        await Provider.of<AuthProvider>(context, listen: false)
+            .getCustomerFromFirebase(user!.uid);
 
-        } else {
-          return showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                content: const Text('Reject from app'),
-                actions: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        child: Text('Ok'),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            },
-          );
+        if (AppConstants.loggedCustomer != null) {
+          if (AppConstants.loggedCustomer!.isAccept == false &&
+              AppConstants.loggedCustomer!.isReject == false) {
+            return showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: const Text('Waiting for Accept'),
+                  actions: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+          else if (AppConstants.loggedCustomer!.isAccept == true) {
+            RouterClass.routerClass.pushWidgetReplacement(MainNavBar());
+          } else {
+            return showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: const Text('Reject from app'),
+                  actions: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(false),
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         }
       }
-
     });
     return Scaffold(
       body: Container(),
