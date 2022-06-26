@@ -1,4 +1,5 @@
 import 'package:agc_customer/componant/componant.dart';
+import 'package:agc_customer/model/order.dart';
 import 'package:agc_customer/servisers/fierbase/firestore_helper.dart';
 import 'package:agc_customer/servisers/firebase_provider.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,10 @@ import '../../servisers/auth_provider.dart';
 import '../registration/login.dart';
 
 class CompleteOrder extends StatelessWidget {
-  TextEditingController SearchController = new TextEditingController();
-
+List<Order> orderList=[];
   @override
   Widget build(BuildContext context) {
+    orderList=Provider.of<FireBaseProvider>(context,listen: false).completedOrder;
     return   SafeArea(
       child: Scaffold(
         body: Consumer<FireBaseProvider>(
@@ -30,7 +31,17 @@ class CompleteOrder extends StatelessWidget {
                 SizedBox(height: 15.h,),
                 Row(
                   children: [
-                    WidgetSearchField(inputType: TextInputType.text, controller: SearchController, icon: Icon(Icons.search)),
+                    CustomSearchField(controller: provider.searchController,onChanged: (value)
+                    {   provider.runFilter(orderList);},
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'هذا الحقل مطلوب';
+                        }
+                        return null;
+                      },
+
+                    ),
+                    // WidgetSearchField(inputType: TextInputType.text, controller: provider.searchController, icon: Icon(Icons.search)),
                     Spacer(),
                     GestureDetector(
                       onTap: (){},
@@ -58,10 +69,12 @@ class CompleteOrder extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 25.h,),
-               Expanded(child: ListView.builder(itemBuilder: (context,index){
-                 return CompletedOrder(provider.completedOrder[index]);
-               },itemCount: provider.completedOrder.length,))
-
+              provider.noResulr? const Center(child: Text('not Exist'),):
+              Expanded(child: ListView.builder(
+                itemBuilder: (context,index){
+                 return CompletedOrder(provider.searchOrder.isEmpty?provider.completedOrder[index]:provider.searchOrder[index]);
+               },
+                itemCount:provider.searchOrder.isEmpty? provider.completedOrder.length:provider.searchOrder.length, ))
 
 
               ],

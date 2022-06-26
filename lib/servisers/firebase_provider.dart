@@ -86,4 +86,31 @@ class FireBaseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  //search
+  TextEditingController searchController = TextEditingController();
+  List<Order> searchOrder=[];
+  bool noResulr=false;
+  runFilter(List<Order> allOrder) {
+    searchOrder = allOrder;
+    if (searchController.text.length==0) {
+      searchOrder = [];
+      noResulr=false;
+      notifyListeners();
+    } else {
+      searchOrder=allOrder
+          .where((order) =>
+          order.orderNumber!.toLowerCase().contains(searchController.text.toLowerCase().trim()))
+          .toList();
+      if(searchOrder.isEmpty){
+        noResulr=true;
+      }else{
+        noResulr=false;
+      }
+    }
+    notifyListeners();
+
+  }
+
+
 }

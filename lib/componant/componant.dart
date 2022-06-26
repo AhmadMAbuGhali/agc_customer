@@ -433,6 +433,7 @@ Widget WidgetSearchField({
   required Icon icon,
   Icon? endIcon,
   bool isPassword = false,
+
 }) =>
     Container(
       height: 40.h,
@@ -592,3 +593,58 @@ Widget CompletedOrder(Order order) => Container(
 
 
 
+class CustomSearchField extends StatelessWidget {
+  CustomSearchField(
+      {required this.onChanged,
+        this.validator,
+        required this.controller});
+  TextEditingController controller;
+  final Function(String?) onChanged;
+  final String? Function(String?)? validator;
+  @override
+  Widget build(BuildContext context) {
+    ScreenUtil.init(context,designSize: const Size(375, 812),);
+    return Container(
+      height: 40.h,
+      width: 200.w,
+      decoration: BoxDecoration(color: ColorManager.parent),
+      child: Row(children: [
+        SizedBox(
+          height: 40.h,
+          width: 251.w,
+          child: TextField(
+            focusNode:FocusNode() ,
+            controller: controller,
+            onChanged: onChanged,
+            textInputAction:TextInputAction.done ,
+            keyboardType:TextInputType.text,
+            textAlignVertical: TextAlignVertical.bottom,
+            style : getMediumStyle(color: ColorManager.black,fontSize: FontSize.s16 ),
+            decoration: InputDecoration(
+              fillColor:  ColorManager.gray ,
+              filled: true,
+              contentPadding: EdgeInsets.only(bottom: 12.h),
+              hintText: 'ابحث ...',
+              hintStyle: getMediumStyle(color: ColorManager.grayTime,fontSize: FontSize.s13),
+
+              prefixIcon:Padding(
+                padding: EdgeInsets.all(9.0.w),
+                child: Icon(Icons.search),
+              ),
+
+              enabledBorder:  OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                  borderSide:   BorderSide(color: ColorManager.white, width: 0)
+              ),
+              focusedBorder:  OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                  borderSide:   BorderSide(color: ColorManager.white, width: 0)
+              ),
+
+            ),
+          ),
+        ),
+      ],),
+    );
+  }
+}
