@@ -83,6 +83,7 @@ class FireBaseProvider extends ChangeNotifier {
 
     allCustomerOrder.removeWhere((element) => element.customerId !=AppConstants.loggedCustomer!.id);
     completedOrder=allCustomerOrder.where((element) => element.status=='Completed').toList();
+    allCustomerOrder.removeWhere((element) => element.status =='Completed');
     notifyListeners();
   }
 

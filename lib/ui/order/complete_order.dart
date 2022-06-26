@@ -1,13 +1,11 @@
 import 'package:agc_customer/componant/componant.dart';
 import 'package:agc_customer/model/order.dart';
-import 'package:agc_customer/servisers/fierbase/firestore_helper.dart';
 import 'package:agc_customer/servisers/firebase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
