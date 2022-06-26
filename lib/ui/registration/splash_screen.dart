@@ -1,5 +1,7 @@
+import 'package:agc_customer/servisers/auth_provider.dart';
 import 'package:agc_customer/ui/registration/sign_up.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
 import 'login.dart';
@@ -9,6 +11,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<AuthProvider>(context,listen: false).getCustomerFromFirebase();
     return Scaffold(
       body:  SplashScreenView(
         navigateRoute: Login(),

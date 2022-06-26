@@ -1,6 +1,7 @@
 import 'package:agc_customer/servisers/auth_provider.dart';
 
 import 'package:agc_customer/ui/registration/splash_screen.dart';
+import 'package:agc_customer/ui/router_class.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class _MyAppState extends State<MyApp> {
           builder: DevicePreview.appBuilder,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-
+          navigatorKey: RouterClass.routerClass.navKey,
           localizationsDelegates: const [
             GlobalCupertinoLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,

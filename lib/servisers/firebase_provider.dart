@@ -81,7 +81,6 @@ class FireBaseProvider extends ChangeNotifier {
     allCustomerOrder.addAll(orderList);
     orderList=await FirestoreHelper.firestoreHelper.getCompletedOrder();
     allCustomerOrder.addAll(orderList);
-
     allCustomerOrder.removeWhere((element) => element.customerId !=AppConstants.loggedCustomer!.id);
     completedOrder=allCustomerOrder.where((element) => element.status=='Completed').toList();
     allCustomerOrder.removeWhere((element) => element.status =='Completed');
