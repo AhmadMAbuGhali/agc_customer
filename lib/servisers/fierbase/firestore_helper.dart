@@ -99,7 +99,7 @@ class FirestoreHelper{
     await firebaseFirestore.collection('SalesPersonOrderWaiting').doc(id).set(order.toMap());
   }
 
-  getOrder() async{
+  Future<List<Order>> getOrderfromWaiting() async{
     QuerySnapshot<Map<String, dynamic>> allAssetSnapshot =
     await firebaseFirestore.collection('SalesPersonOrderWaiting').get();
     List<Order> allAsset = allAssetSnapshot.docs.map((e) {
@@ -110,4 +110,60 @@ class FirestoreHelper{
     }).toList();
     return allAsset;
   }
+  Future<List<Order>> getCompletedOrder() async{
+    QuerySnapshot<Map<String, dynamic>> allAssetSnapshot =
+    await firebaseFirestore.collection('CompleteOrder').get();
+    List<Order> allAsset = allAssetSnapshot.docs.map((e) {
+      Map<String, dynamic> documentMap = e.data();
+      documentMap['id'] = e.id;
+      Order productModel = Order.fromMap(documentMap);
+      return productModel;
+    }).toList();
+    return allAsset;
+  }
+  Future<List<Order>> getOrderFromAccepted() async{
+    QuerySnapshot<Map<String, dynamic>> allAssetSnapshot =
+    await firebaseFirestore.collection('AcceptedOrder').get();
+    List<Order> allAsset = allAssetSnapshot.docs.map((e) {
+      Map<String, dynamic> documentMap = e.data();
+      documentMap['id'] = e.id;
+      Order productModel = Order.fromMap(documentMap);
+      return productModel;
+    }).toList();
+    return allAsset;
+  }
+  Future<List<Order>> getOrderfromStoreKeaper() async{
+    QuerySnapshot<Map<String, dynamic>> allAssetSnapshot =
+    await firebaseFirestore.collection('StoreKeeperOrder').get();
+    List<Order> allAsset = allAssetSnapshot.docs.map((e) {
+      Map<String, dynamic> documentMap = e.data();
+      documentMap['id'] = e.id;
+      Order productModel = Order.fromMap(documentMap);
+      return productModel;
+    }).toList();
+    return allAsset;
+  }
+  Future<List<Order>> getOrderFromDriver() async{
+    QuerySnapshot<Map<String, dynamic>> allAssetSnapshot =
+    await firebaseFirestore.collection('DriverOrder').get();
+    List<Order> allAsset = allAssetSnapshot.docs.map((e) {
+      Map<String, dynamic> documentMap = e.data();
+      documentMap['id'] = e.id;
+      Order productModel = Order.fromMap(documentMap);
+      return productModel;
+    }).toList();
+    return allAsset;
+  }
+  Future<List<Order>> getOrderFromDriverPinding() async{
+    QuerySnapshot<Map<String, dynamic>> allAssetSnapshot =
+    await firebaseFirestore.collection('DriverOrderPinding').get();
+    List<Order> allAsset = allAssetSnapshot.docs.map((e) {
+      Map<String, dynamic> documentMap = e.data();
+      documentMap['id'] = e.id;
+      Order productModel = Order.fromMap(documentMap);
+      return productModel;
+    }).toList();
+    return allAsset;
+  }
+
 }

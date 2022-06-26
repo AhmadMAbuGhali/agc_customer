@@ -8,6 +8,7 @@ import 'dart:developer';
 import 'package:agc_customer/model/customer_model.dart';
 import 'package:agc_customer/model/order.dart';
 import 'package:agc_customer/model/product_model.dart';
+import 'package:agc_customer/resources/constants_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'fierbase/firestore_helper.dart';
@@ -17,12 +18,14 @@ class FireBaseProvider extends ChangeNotifier {
     getAllWaitingCustomer();
     getAllCustomer();
     getAllProduct();
+    getAllCustomerOrder();
   }
 
   List<CustomerModel> watingCustomer=[];
   List<CustomerModel> allCustomer=[];
   List<ProductModel> allProduct=[];
   List<ProductModel> cartProduct=[];
+  List<Order> allCustomerOrder=[];
   deleteFromCart(int index){
     cartProduct.removeAt(index);
     notifyListeners();
@@ -55,12 +58,30 @@ class FireBaseProvider extends ChangeNotifier {
   getAllProduct() async {
     allProduct= await FirestoreHelper.firestoreHelper.getAllProduct();
     notifyListeners();
-  } 
+  }
   addOrder(Order order) async {
     await FirestoreHelper.firestoreHelper.addOrder(order);
     notifyListeners();
   }
 
+  getAllCustomerOrder() async {
+    allCustomerOrder=[];
+    List<Order> orderList=[];
+    orderList=await FirestoreHelper.firestoreHelper.getOrderfromWaiting();
+    allCustomerOrder.addAll(orderList);
+    orderList=await FirestoreHelper.firestoreHelper.getOrderFromAccepted();
+    allCustomerOrder.addAll(orderList);
+    orderList=await FirestoreHelper.firestoreHelper.getOrderfromStoreKeaper();
+    allCustomerOrder.addAll(orderList);
+    orderList=await FirestoreHelper.firestoreHelper.getOrderFromDriver();
+    allCustomerOrder.addAll(orderList);
+    orderList=await FirestoreHelper.firestoreHelper.getOrderFromDriverPinding();
+    allCustomerOrder.addAll(orderList);
+    orderList=await FirestoreHelper.firestoreHelper.getCompletedOrder();
+    allCustomerOrder.addAll(orderList);
 
+    allCustomerOrder.removeWhere((element) => element.customerId !=AppConstants.loggedCustomer!.id);
+    notifyListeners();
+  }
 
 }
