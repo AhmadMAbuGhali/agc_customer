@@ -26,6 +26,7 @@ class FireBaseProvider extends ChangeNotifier {
   List<ProductModel> allProduct=[];
   List<ProductModel> cartProduct=[];
   List<Order> allCustomerOrder=[];
+  List<Order> completedOrder=[];
   deleteFromCart(int index){
     cartProduct.removeAt(index);
     notifyListeners();
@@ -81,6 +82,7 @@ class FireBaseProvider extends ChangeNotifier {
     allCustomerOrder.addAll(orderList);
 
     allCustomerOrder.removeWhere((element) => element.customerId !=AppConstants.loggedCustomer!.id);
+    completedOrder=allCustomerOrder.where((element) => element.status=='Completed').toList();
     notifyListeners();
   }
 
