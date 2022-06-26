@@ -606,12 +606,12 @@ class CustomSearchField extends StatelessWidget {
     ScreenUtil.init(context,designSize: const Size(375, 812),);
     return Container(
       height: 40.h,
-      width: 200.w,
+      width: 220.w,
       decoration: BoxDecoration(color: ColorManager.parent),
       child: Row(children: [
         SizedBox(
           height: 40.h,
-          width: 251.w,
+          width: 220.w,
           child: TextField(
             focusNode:FocusNode() ,
             controller: controller,
@@ -621,7 +621,7 @@ class CustomSearchField extends StatelessWidget {
             textAlignVertical: TextAlignVertical.bottom,
             style : getMediumStyle(color: ColorManager.black,fontSize: FontSize.s16 ),
             decoration: InputDecoration(
-              fillColor:  ColorManager.gray ,
+              fillColor:  ColorManager.white ,
               filled: true,
               contentPadding: EdgeInsets.only(bottom: 12.h),
               hintText: 'ابحث ...',
